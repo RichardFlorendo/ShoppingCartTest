@@ -25,7 +25,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="80dp"
             android:textSize="20dp"
-            android:fontFamily="@font/Montserrat_ExtraBold"
+            android:fontFamily="@font/montserrat_extrabold"
             android:text="Your order has been processed" />
 
         <TextView
@@ -36,7 +36,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="120dp"
             android:textSize="20dp"
-            android:fontFamily="@font/Montserrat_Regular"
+            android:fontFamily="@font/montserrat_regular"
             android:text="Your order ID is" />
 
         <TextView
@@ -46,7 +46,7 @@
             android:layout_marginLeft="185dp"
             android:layout_marginTop="120dp"
             android:textSize="20dp"
-            android:fontFamily="@font/Montserrat_Bold"
+            android:fontFamily="@font/montserrat_bold"
             android:text="#123" />
 
     </androidx.cardview.widget.CardView>
