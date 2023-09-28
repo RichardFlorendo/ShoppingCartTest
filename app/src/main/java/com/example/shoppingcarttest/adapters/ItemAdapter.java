@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,8 +38,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
             default:
                 View layoutView = LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.singleitem, parent, false);
+                View mainView = LayoutInflater.from(parent.getContext()).inflate(
+                        R.layout.activity_main, parent, false);
 
-                ViewHolder holder = new ViewHolder(layoutView, p -> {
+                ViewHolder holder = new ViewHolder(layoutView, mainView, p -> {
 
                 });
                 return holder;
@@ -50,8 +53,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         int viewType = getItemViewType(position);
-
-        MainActivity activity = new MainActivity();
 
         SharedPreferences pref = this.context.getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
@@ -66,28 +67,29 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
                 String imageName = itemModel.getProdId();
                 int resID = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
 
-                String itemID = itemModel.getProdId();
+                String itemID = String.valueOf((position + 1));
 
-                ViewHolder.idIV.setImageResource(resID);
-                ViewHolder.nameTV.setText(itemModel.getName());
-                ViewHolder.categoryTV.setText(itemModel.getCategory());
-                ViewHolder.costTV.setText("$" + itemModel.getCost().substring(0, itemModel.getCost().indexOf(".")));
-                ViewHolder.bgIV.setBackgroundColor((Color.parseColor(itemModel.getColor())));
+                holder.idIV.setImageResource(resID);
+                holder.nameTV.setText(itemModel.getName());
+                holder.categoryTV.setText(itemModel.getCategory());
+                holder.costTV.setText("$" + itemModel.getCost().substring(0, itemModel.getCost().indexOf(".")));
+                holder.bgIV.setBackgroundColor((Color.parseColor(itemModel.getColor())));
 
-                ViewHolder.notifCV.setBackgroundColor((Color.parseColor(itemModel.getColor())));
-                ViewHolder.notifNameTV.setText(itemModel.getName());
+//                holder.notifCV.setBackgroundColor((Color.parseColor(itemModel.getColor())));
+//                holder.notifNameTV.setText(itemModel.getName());
 
                 holder.addBTN.setOnClickListener(v -> {
-                    editor.putString(itemID + "ID", itemID); // Storing string
-                    editor.putString(itemID + "ItemName", itemModel.getName()); // Storing string
-                    editor.putString(itemID + "ItemCost", itemModel.getCost()); // Storing string
-                    editor.putString(itemID + "BgColor", itemModel.getColor()); // Storing string
+
+//                    holder.notifCV.setVisibility(View.VISIBLE);
+                    editor.putInt("p_" + itemID + "ID", position + 1);
                     editor.putBoolean("isCartEmpty", false);
 
                     editor.commit();
 
                     ((MainActivity)context).refreshActivtiy();
                 });
+
+//                holder.notifBTN.setOnClickListener(v-> holder.notifCV.setVisibility(View.INVISIBLE));
         }
     }
 
@@ -109,12 +111,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         public TextView notifNameTV;
         public Button addBTN;
         public CardView notifCV;
-        public ImageView cartIV;
         public TextView cartTV;
+        public ImageButton notifBTN;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
-        public ViewHolder(View itemView, MyClickListener listener) {
+        public ViewHolder(View itemView, View mainView, MyClickListener listener) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
@@ -126,15 +128,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
             bgIV = itemView.findViewById(R.id.productimage);
             addBTN = itemView.findViewById(R.id.addBTN);
 
-            notifCV = itemView.findViewById(R.id.addNotif);
-            notifNameTV = itemView.findViewById(R.id.itemNotifName);
+//            notifCV = mainView.findViewById(R.id.addNotif);
+//            notifNameTV = mainView.findViewById(R.id.itemNotifName);
+//            notifBTN = mainView.findViewById(R.id.notifClose);
 
-            cartIV = itemView.findViewById(R.id.cartnotif);
             cartTV = itemView.findViewById(R.id.cartnum);
 
             this.listener = listener;
 
             addBTN.setOnClickListener(this);
+//            notifBTN.setOnClickListener(this);
         }
 
         @Override

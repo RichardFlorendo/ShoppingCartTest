@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shoppingcarttest.CartActivity;
 import com.example.shoppingcarttest.MainActivity;
 import com.example.shoppingcarttest.R;
 import com.example.shoppingcarttest.datamodel.CartModel;
@@ -25,7 +26,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
     private static final int TYPE = 1;
     private Context context;
     private final List<Object> listItem;
-    private MainActivity mainActivity;
+    private CartActivity cartActivity;
+
 
     public CartAdapter(Context context, List<Object> listRecyclerItem) {
         this.context = context;
@@ -53,8 +55,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
     public void onBindViewHolder(ViewHolder holder, int position) {
         int viewType = getItemViewType(position);
 
-        mainActivity = new MainActivity();
-        List<String> cartList = mainActivity.getList();
+        cartActivity = new CartActivity();
 
         SharedPreferences pref = this.context.getSharedPreferences("MyPref", 0); // 0 - for private mode
         SharedPreferences.Editor editor = pref.edit();
@@ -76,7 +77,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
 
                     removeItem(holder.getAdapterPosition());
 
-                    ((MainActivity)context).refreshActivtiy();
+                    ((CartActivity)context).refreshActivtiy();
                 });
         }
     }
@@ -107,7 +108,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
             cartcostTV = itemView.findViewById(R.id.cartcost);
             cartdelBTN = itemView.findViewById(R.id.cartdelBTN);
 
-            cartCV = itemView.findViewById(R.id.cartList);
+            cartCV = itemView.findViewById(R.id.cartItem);
 
             this.listener = listener;
 

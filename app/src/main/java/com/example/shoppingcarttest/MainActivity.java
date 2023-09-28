@@ -36,7 +36,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private RecyclerView itemList;
     private List<Object> viewItems = new ArrayList<>();
-    List<String> cartList= new ArrayList<>();
+    public ArrayList<String> cartList= new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private static final String TAG = "MainActivity";
@@ -47,12 +47,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView actLabel = findViewById(R.id.label);
-        actLabel.setText("Shop");
+        actLabel.setText("Products");
 
         pref = getSharedPreferences("MyPref", 0); // 0 - for private mode
 
         ImageButton cartBtn = findViewById(R.id.cart);
-        Button homeBtn = findViewById(R.id.homeBTN);
+        TextView homeTV = findViewById(R.id.homeTV);
 
         TextView cartNum = findViewById(R.id.cartnum);
 
@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
             editor.commit();
         }
 
-
         itemList = findViewById(R.id.itemlist);
 
         layoutManager = new LinearLayoutManager(this);
@@ -77,16 +76,16 @@ public class MainActivity extends AppCompatActivity {
 
         addItemsFromJSON();
 
-        cartBtn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CartActivity.class)));
+        cartBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CartActivity.class);
+            intent.putExtra("CartList", cartList);
+            startActivity(intent);
+        });
 
-        homeBtn.setOnClickListener(v -> {
+        homeTV.setOnClickListener(v -> {
             finish();
             startActivity(getIntent());
         });
-    }
-
-    public List<String> getList() {
-        return cartList;
     }
 
     private void addItemsFromJSON() {
@@ -153,13 +152,13 @@ public class MainActivity extends AppCompatActivity {
             cartNum.setVisibility(View.VISIBLE);
 
             for (int i=1; i < 6; i++){
-                String item = pref.getString("p_"+ i + "ID", null);
-                if (item != null){
-                    cartList.add(item);
+                int item = pref.getInt("p_"+ i + "ID", -1);
+                Log.d(TAG, String.valueOf(item));
+
+                if (item > 0){
+                    cartList.add(String.valueOf(item));
                 }
             }
-
-            Log.d("Testing", cartList.toString());
             return cartList.size();
         }
         else {

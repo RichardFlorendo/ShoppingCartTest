@@ -29,6 +29,7 @@
         android:layout_marginRight="25dp"
         android:layout_marginBottom="25dp"
         android:text="Buy Now  >"
+        android:backgroundTint="@color/yellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

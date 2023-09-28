@@ -21,21 +21,23 @@
 
     <EditText
         android:id="@+id/nameET"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginTop="25dp"
-        android:text="Name"
+        android:hint="e.g. John Doe"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your Name"
+        android:text="Your Email"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="25dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,18 +45,19 @@
 
     <EditText
         android:id="@+id/emailET"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginTop="25dp"
-        android:text="Name"
+        android:hint="e.g. john.doe@email.com"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/tosSW"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
@@ -69,16 +72,20 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="26dp"
-        android:text="Your Name"
-        app:layout_constraintStart_toEndOf="@+id/switch1"
+        android:text="I agree with the Terms and Conditions"
+        app:layout_constraintStart_toEndOf="@+id/tosSW"
         app:layout_constraintTop_toBottomOf="@+id/emailET" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/confirmPayBTN"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="Button"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="Pay $0"
+        android:fontFamily="@font/montserrat_extrabold"
+        android:backgroundTint="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />

@@ -33,10 +33,10 @@ public class CartActivity extends AppCompatActivity {
     private MainActivity mainActivity;
     private List<Object> viewItems = new ArrayList<>();
     private static final String TAG = "CartActivity";
-    List<String> list= new ArrayList<>();
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView cartList;
+    private int total = 0;
     SharedPreferences pref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +50,11 @@ public class CartActivity extends AppCompatActivity {
         ImageView cartNotif = findViewById(R.id.cartnotif);
         TextView cartNum = findViewById(R.id.cartnum);
 
-        Button homeBtn = findViewById(R.id.homeBTN);
+        TextView homeTV = findViewById(R.id.homeTV);
+        Button checkBtn = findViewById(R.id.checkoutBTN);
 
-        pref = getSharedPreferences("MyPref", 0);
-
-        mainActivity = new MainActivity();
-        List<String> list = mainActivity.getList();
+        Intent intent = getIntent();
+        ArrayList<String> list = intent.getStringArrayListExtra("CartList");
 
         cartList = findViewById(R.id.cartList);
 
@@ -73,24 +72,82 @@ public class CartActivity extends AppCompatActivity {
 
             cartNum.setText(String.valueOf(cartItems));
 
+            Log.d(TAG, String.valueOf(list.size()));
+
             for (int i=0; i <list.size(); i++){
-                String idRef = pref.getString("p_"+ i + "ID", null);
-
-                String itemName = pref.getString(idRef + "ItemName", null);
-                String itemCost = pref.getString(idRef + "ItemCost", null);
-                String bgColor = pref.getString(idRef + "BgColor", null);
-
-                CartModel cartModel = new CartModel(idRef, itemName, itemCost, bgColor);
-                viewItems.add(cartModel);
+                addItemsFromJSON(i);
             }
-
-            cartNum.setText(String.valueOf(list.size()));
         }
         else {
             cartNotif.setVisibility(View.INVISIBLE);
             cartNum.setVisibility(View.INVISIBLE);
         }
 
-        homeBtn.setOnClickListener(v -> startActivity(new Intent(CartActivity.this, MainActivity.class)));
+        checkBtn.setOnClickListener(v -> {
+            Intent checkintent = new Intent(CartActivity.this, CheckoutActivity.class);
+            checkintent.putExtra("CartList", list);
+            checkintent.putExtra("Price", total);
+            startActivity(checkintent);
+        });
+
+        homeTV.setOnClickListener(v -> startActivity(new Intent(CartActivity.this, MainActivity.class)));
+    }
+
+    private void addItemsFromJSON(int index) {
+        try {
+            TextView cartTotal = findViewById(R.id.cartTotal);
+
+            JSONObject object = new JSONObject(readJSONDataFromFile());
+            JSONArray jsonArray  = object.getJSONArray("products");
+
+            String id = String.valueOf((index + 1));
+
+            int idRef = pref.getInt("p_"+ id + "ID", -1);
+            Log.d(TAG, String.valueOf(idRef));
+
+            JSONObject itemObj = jsonArray.getJSONObject(idRef);
+            Log.d("TestingTesting", String.valueOf(index + idRef));
+
+            String itemName = itemObj.getString("name");
+            String itemCost = itemObj.getString("price");
+            String bgColor = itemObj.getString("bgColor");
+            Log.d("Testing", itemName + "ID");
+
+            total += Integer.parseInt(itemCost.substring(0, itemCost.indexOf(".")));
+            cartTotal.setText("$" + total);
+
+            CartModel cartModel = new CartModel(String.valueOf(idRef), itemName, itemCost, bgColor);
+            viewItems.add(cartModel);
+        } catch (JSONException | IOException e) {
+            Log.d(TAG, "addItemsFromJSON: ", e);
+        }
+    }
+
+    private String readJSONDataFromFile() throws IOException{
+
+        InputStream inputStream = null;
+        StringBuilder builder = new StringBuilder();
+
+        try {
+
+            String jsonString;
+            inputStream = getResources().openRawResource(R.raw.products);
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(inputStream, "UTF-8"));
+
+            while ((jsonString = bufferedReader.readLine()) != null) {
+                builder.append(jsonString);
+            }
+
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        }
+        return new String(builder);
+    }
+
+    public void refreshActivtiy(){
+        recreate();
     }
 }
