@@ -49,12 +49,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         }
     }
 
-    // Involves populating data into the item through holder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         int viewType = getItemViewType(position);
 
-        SharedPreferences pref = this.context.getSharedPreferences("MyPref", 0); // 0 - for private mode
+        SharedPreferences pref = this.context.getSharedPreferences("MyPref", 0);
         SharedPreferences.Editor editor = pref.edit();
 
         switch (viewType) {
@@ -74,13 +73,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
                 holder.categoryTV.setText(itemModel.getCategory());
                 holder.costTV.setText("$" + itemModel.getCost().substring(0, itemModel.getCost().indexOf(".")));
                 holder.bgIV.setBackgroundColor((Color.parseColor(itemModel.getColor())));
-
-//                holder.notifCV.setBackgroundColor((Color.parseColor(itemModel.getColor())));
-//                holder.notifNameTV.setText(itemModel.getName());
-
                 holder.addBTN.setOnClickListener(v -> {
 
-//                    holder.notifCV.setVisibility(View.VISIBLE);
                     editor.putInt("p_" + itemID + "ID", position + 1);
                     editor.putBoolean("isCartEmpty", false);
 
@@ -89,19 +83,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
                     ((MainActivity)context).refreshActivtiy();
                 });
 
-//                holder.notifBTN.setOnClickListener(v-> holder.notifCV.setVisibility(View.INVISIBLE));
         }
     }
 
-    // Returns the total count of items in the list
     @Override
     public int getItemCount() {
         return listItem.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        // Your holder should contain a member variable
-        // for any view that will be set as you render a row
         MyClickListener listener;
         public ImageView idIV;
         public TextView nameTV;
@@ -114,11 +104,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         public TextView cartTV;
         public ImageButton notifBTN;
 
-        // We also create a constructor that accepts the entire item row
-        // and does the view lookups to find each subview
         public ViewHolder(View itemView, View mainView, MyClickListener listener) {
-            // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
             super(itemView);
 
             idIV = itemView.findViewById(R.id.productimage);

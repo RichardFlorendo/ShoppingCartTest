@@ -42,7 +42,7 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cartactivity);
-        pref = getSharedPreferences("MyPref", 0); // 0 - for private mode
+        pref = getSharedPreferences("MyPref", 0);
 
         TextView actLabel = findViewById(R.id.label);
         actLabel.setText("Cart");

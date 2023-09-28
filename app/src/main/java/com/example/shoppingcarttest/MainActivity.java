@@ -3,11 +3,9 @@ package com.example.shoppingcarttest;
 import static android.app.PendingIntent.getActivity;
 
 import com.example.shoppingcarttest.adapters.ItemAdapter;
-import com.example.shoppingcarttest.datamodel.CartModel;
 import com.example.shoppingcarttest.datamodel.ItemModel;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +14,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,7 +27,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         TextView actLabel = findViewById(R.id.label);
         actLabel.setText("Products");
 
-        pref = getSharedPreferences("MyPref", 0); // 0 - for private mode
+        pref = getSharedPreferences("MyPref", 0);
 
         ImageButton cartBtn = findViewById(R.id.cart);
         TextView homeTV = findViewById(R.id.homeTV);

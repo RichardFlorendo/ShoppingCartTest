@@ -50,14 +50,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         }
     }
 
-    // Involves populating data into the item through holder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         int viewType = getItemViewType(position);
 
         cartActivity = new CartActivity();
 
-        SharedPreferences pref = this.context.getSharedPreferences("MyPref", 0); // 0 - for private mode
+        SharedPreferences pref = this.context.getSharedPreferences("MyPref", 0);
         SharedPreferences.Editor editor = pref.edit();
 
         switch (viewType) {
@@ -72,7 +71,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
                 ViewHolder.cartCV.setBackgroundColor((Color.parseColor(cartModel.getColor())));
 
                 holder.cartdelBTN.setOnClickListener(v -> {
-                    editor.remove(cartModel.getId()); // Storing string
+                    editor.remove(cartModel.getId());
                     editor.commit();
 
                     removeItem(holder.getAdapterPosition());
@@ -82,26 +81,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
         }
     }
 
-    // Returns the total count of items in the list
     @Override
     public int getItemCount() {
         return listItem.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        // Your holder should contain a member variable
-        // for any view that will be set as you render a row
         MyClickListener listener;
         public ImageButton cartdelBTN;
         public TextView cartnameTV;
         public TextView cartcostTV;
         public CardView cartCV;
 
-        // We also create a constructor that accepts the entire item row
-        // and does the view lookups to find each subview
         public ViewHolder(View itemView, MyClickListener listener) {
-            // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
             super(itemView);
 
             cartnameTV = itemView.findViewById(R.id.cartname);
