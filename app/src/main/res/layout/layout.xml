@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:background="@null"
+        android:theme="?attr/actionBarTheme" />
+
+    <ImageButton
+        android:id="@+id/cart"
+        android:contentDescription="carticon"
+        android:layout_width="67dp"
+        android:layout_height="45dp"
+        android:layout_gravity="right"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/cart_icon" />
+
+    <TextView
+        android:id="@+id/homeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@null"
+        android:fontFamily="@font/montserrat_black"
+        android:text="Shop" />
+
+    <ImageView
+        android:id="@+id/cartnotif"
+        android:layout_width="33dp"
+        android:layout_height="30dp"
+        android:layout_gravity="right"
+        android:visibility="invisible"
+        app:srcCompat="@android:drawable/presence_online" />
+
+    <TextView
+        android:id="@+id/cartnum"
+        android:paddingTop="5dp"
+        android:layout_width="34dp"
+        android:layout_height="30dp"
+        android:layout_gravity="right"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        android:text="0"
+        tools:ignore="RtlCompat" />
+
+    <TextView
+        android:id="@+id/label"
+        android:fontFamily="@font/montserrat_black"
+        android:paddingTop="5dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Label" />
+
+
+</FrameLayout>

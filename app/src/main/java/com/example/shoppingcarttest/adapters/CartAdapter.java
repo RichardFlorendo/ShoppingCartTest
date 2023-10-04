@@ -6,17 +6,13 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoppingcarttest.CartActivity;
-import com.example.shoppingcarttest.MainActivity;
 import com.example.shoppingcarttest.R;
 import com.example.shoppingcarttest.datamodel.CartModel;
 
